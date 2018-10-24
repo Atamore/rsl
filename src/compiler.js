@@ -82,7 +82,7 @@ class Compiler {
                 }
 
                 try {
-                    await this.generateChunks(stats);
+                    this.generateChunks(stats);
 
                     resolve(stats);
                 } catch (e) {
@@ -114,7 +114,7 @@ class Compiler {
         app.use(webpackHotMiddleware(this.compiler.compilers[0]));
     }
 
-    async generateChunks(stats) {
+    generateChunks(stats) {
         // Normalize chunk assets
 
         const assets = stats.stats[0].toJson().assetsByChunkName.main;
@@ -123,7 +123,7 @@ class Compiler {
             const chunks = normalizeAssets(assets);
 
             // Write chunks to file
-            await fs.writeFile(chunksPath, JSON.stringify(chunks), 'utf8');
+            fs.writeFileSync(chunksPath, JSON.stringify(chunks), 'utf8');
         }
 
         this.clearCache();
