@@ -44,7 +44,7 @@ const serverEntryPath = path.join(
     constants.SERVER_BUNDLE_NAME
 );
 
-const serverFileRegexp = /server\/.*\.js/;
+const serverFileRegexp = /server[/\\].*\.js/;
 
 const chunksPath = path.join(
     rootFolder,
