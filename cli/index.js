@@ -21,78 +21,87 @@ const cli = meow(
     {}
 );
 
-const command = cli.input[0];
-const cwd = process.cwd();
-const mode = process.env.NODE_ENV || 'development';
-const settings = require(path.join(cwd, 'package.json')).rsl || {};
+try {
+    const command = cli.input[0];
+    const cwd = process.cwd();
+    const mode = process.env.NODE_ENV || 'development';
+    const settings = require(path.join(cwd, 'package.json')).rsl || {};
 
-const configComposer = require(path.join(cwd, settings.webpack));
+    const configComposer = require(path.join(cwd, settings.webpack));
 
-const configs = {
-    client: configComposer({
-        mode,
-        server: false
-    }),
-    server: configComposer({
-        mode,
-        server: true
-    })
-};
-
-const entries = {
-    client: path.join(cwd, settings.client),
-    server: path.join(cwd, settings.server)
-};
-
-switch (command) {
-    case 'start': {
-        const entry = require(path.join(cwd, settings.entry));
-
-        const handler = createHandler();
-
-        const compiler = new Compiler({
-            configs,
+    const configs = {
+        client: configComposer({
             mode,
-            entries
-        });
+            server: false
+        }),
+        server: configComposer({
+            mode,
+            server: true
+        })
+    };
 
-        if (mode === 'development') {
+    const entries = {
+        client: path.join(cwd, settings.client),
+        server: path.join(cwd, settings.server)
+    };
+
+    switch (command) {
+        case 'start': {
+            const entry = require(path.join(cwd, settings.entry));
+
+            const handler = createHandler();
+
+            const compiler = new Compiler({
+                configs,
+                mode,
+                entries
+            });
+
+            if (mode === 'development') {
+                compiler
+                    .build()
+                    .then(() => {
+                        entry({
+                            handler,
+                            initMiddleware: compiler.initMiddleware
+                        });
+                    })
+                    .catch(e => {
+                        console.error(e);
+                    });
+            } else {
+                entry({
+                    handler
+                });
+            }
+
+            break;
+        }
+
+        case 'build': {
+            const compiler = new Compiler({
+                configs,
+                mode: 'production',
+                entries
+            });
+
             compiler
                 .build()
                 .then(() => {
-                    entry({
-                        handler,
-                        initMiddleware: compiler.initMiddleware
-                    });
+                    console.log('All done');
                 })
                 .catch(e => {
                     console.error(e);
                 });
-        } else {
-            entry({
-                handler
-            });
+
+            break;
         }
 
-        break;
+        default:
+            cli.showHelp();
+
+            break;
     }
-
-    case 'build': {
-        const compiler = new Compiler({
-            configs,
-            mode: 'production',
-            entries
-        });
-
-        compiler.build().then(() => {
-            console.log('All done');
-        });
-
-        break;
-    }
-
-    default:
-        cli.showHelp();
-
-        break;
+} catch (e) {
+    console.error(e);
 }

@@ -1,6 +1,7 @@
 // Core libraries
 const fs = require('fs-extra');
 const path = require('path');
+const mkdirp = require('mkdirp');
 
 // Webpack
 const webpack = require('webpack');
@@ -84,6 +85,13 @@ class Compiler {
                 try {
                     this.generateChunks(stats);
 
+                    console.log(
+                        stats.toString({
+                            // Add console colors
+                            colors: true
+                        })
+                    );
+
                     resolve(stats);
                 } catch (e) {
                     reject(e);
@@ -122,7 +130,8 @@ class Compiler {
         if (assets) {
             const chunks = normalizeAssets(assets);
 
-            // Write chunks to file
+            mkdirp.sync(path.dirname(chunksPath));
+
             fs.writeFileSync(chunksPath, JSON.stringify(chunks), 'utf8');
         }
 

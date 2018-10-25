@@ -1,6 +1,6 @@
 {
     "name": "@atamore/rsl",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "React Server Launcher",
     "main": "index.js",
     "scripts": {
@@ -32,9 +32,10 @@
         "prettier": "^1.14.3"
     },
     "dependencies": {
-        "meow": "^5.0.0",
         "fs-extra": "^7.0.0",
         "js-string-escape": "^1.0.1",
+        "meow": "^5.0.0",
+        "mkdirp": "^0.5.1",
         "webpack": "^4.20.2",
         "webpack-dev-middleware": "^3.4.0",
         "webpack-hot-middleware": "^2.24.2",
