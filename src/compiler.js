@@ -43,7 +43,6 @@ class Compiler {
             ],
             output: {
                 ...(configs.client.output || {}),
-                filename: constants.CLIENT_BUNDLE_NAME,
                 path: path.join(
                     process.cwd(),
                     constants.BUILD_PATH,
