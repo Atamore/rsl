@@ -40,7 +40,7 @@
         "meow": "^5.0.0",
         "mkdirp": "^0.5.1",
         "webpack-dev-middleware": "^3.4.0",
-        "webpack-hot-middleware": "^2.24.2",
+        "webpack-hot-middleware": "^2.24.3",
         "webpack-node-externals": "^1.7.2"
     }
 }
