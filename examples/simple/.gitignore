@@ -1,0 +1,17 @@
+# webpack build target folder
+/webroot/build
+
+# node modules
+/node_modules
+
+# npm errors
+npm-debug.log
+
+# webpack cache
+.cache-loader
+
+# for OS X users
+.DS_Store
+
+# env configuration
+.env
