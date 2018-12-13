@@ -2,7 +2,8 @@
 
 This example demonstrates the simplest project setup with `rsl`.
 
-Usage:  
+## Usage
+
 **Install modules**  
 `npm install` or `yarn install`  
 **Run the project**  
