@@ -15,6 +15,7 @@
         "lint": "eslint ./src"
     },
     "dependencies": {
+        "dotenv": "^6.2.0",
         "fastify": "^1.13.1",
         "fastify-url-data": "^2.2.0",
         "found": "^0.3.14",
